@@ -11,10 +11,12 @@
 |
 */
 
-Route::view('/', 'welcome');
+// Route::view('/', 'welcome');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::get('/logout', 'Auth\LoginController@logout');
+
+Route::redirect('/', '/login');
