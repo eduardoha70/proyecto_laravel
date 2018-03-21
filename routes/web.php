@@ -34,4 +34,4 @@ Route::group([
     Route::resource('token', 'TokenController');
 });
 
-
+Route::view('apps', 'apps.app');

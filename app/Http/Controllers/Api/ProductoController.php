@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+
 use App\Models\Producto;
 use App\Http\Resources\Producto as ProductoResource;
 
@@ -14,9 +15,11 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return ProductoResource::collection(Producto::paginate());
+        $limit = $request->limit ? $request->limit : 5;
+        $query = ProductoResource::collection(Producto::paginate($limit));
+        return $query;
     }
 
     /**
@@ -26,7 +29,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -37,7 +40,19 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $registro = new Producto;
+        $registro->fill($request->all());
+
+        if (!$registro->save()) {
+            $errors = $registro->errors();
+            throw new \Exception($errors);
+        }
+        $response = [
+            'message'   =>  'created',
+            'id'        =>  $registro->id
+        ];
+
+        return $response;
     }
 
     /**
@@ -71,7 +86,19 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $registro = Producto::where('id', $id)->firstOrFail();
+        $registro->fill($request->all());
+
+        if (!$registro->save()) {
+            $errors = $registro->errors();
+            throw new \Exception($errors);
+        }
+        $response = [
+            'message'   =>  'updated',
+            'id'        =>  $registro->id
+        ];
+
+        return $response;
     }
 
     /**
@@ -82,6 +109,17 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $registro = Producto::where('id', $id)->firstOrFail();
+
+        if (!$registro->delete()) {
+            $errors = $registro->errors();
+            throw new \Exception($errors);
+        }
+        $response = [
+            'message'   =>  'deleted',
+            'id'        =>  $registro->id
+        ];
+
+        return $response;
     }
 }

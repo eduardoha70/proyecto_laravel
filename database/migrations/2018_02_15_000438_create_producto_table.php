@@ -18,6 +18,7 @@ class CreateProductoTable extends Migration
             $table->string('descripcion');
             $table->integer('precio');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
