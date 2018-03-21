@@ -20,3 +20,18 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::redirect('/', '/login');
+
+
+Route::group([
+    'prefix' => '/admin',
+    'middleware' => ['auth'],
+    'namespace' => 'Admin'
+], function () {
+    Route::get('/', [
+        'as'    =>  'admin_inicio',
+        'uses'  =>  'AdminController@index',
+    ]);
+    Route::resource('token', 'TokenController');
+});
+
+
