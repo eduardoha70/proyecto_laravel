@@ -6,6 +6,8 @@ import VueSweetAlert from 'vue-sweetalert2'
 import router from '../components/productos/router'
 import es from '../lang/es'
 
+require('./../bootstrap');
+
 Vue.use(VeeValidate, {
   locale: 'es',
   dictionary: {
