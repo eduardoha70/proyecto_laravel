@@ -1,10 +1,26 @@
+<style>
+  .ModalBody {
+    color: #2a3f54;
+  }
+  .ModalFooter {
+    background-color: #f5f5f5;
+  }
+</style>
+
+
 <template>
   <transition name="modal">
     <div class="modal modal-mask" style="display: block">
-      <div class="modal-dialog" role="document">
+
+      <div class="modal-dialog modal-lg" role="document">
+
         <div class="modal-content">
-          <div class="modal-header">
+
+          <div class="modal-header ModalHeader">
             <h4 class="modal-title">
+              <button type="button" class="close" @click="$emit('cerrar')">
+                <span aria-hidden="true">×</span>
+              </button>
               <slot name="header"></slot>
             </h4>
           </div>
@@ -14,11 +30,14 @@
           </div>
 
           <div class="modal-footer">
-            <button class="btn btn-primary" @click.prevent="$emit('save')">Ok</button>
-            <button class="btn btn-danger" @click.prevent="$emit('close')">Cerrar</button>
+            <button class="btn btn-primary" @click.prevent="$emit('guardar')">Guardar</button>
+            <button class="btn btn-danger" @click.prevent="$emit('cerrar')">Cerrar</button>
           </div>
+
         </div>
+
       </div>
+
     </div>
   </transition>
 </template>

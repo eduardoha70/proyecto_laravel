@@ -24606,8 +24606,10 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layouts_modal__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layouts_modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__layouts_modal__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ModalProductos__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ModalProductos___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ModalProductos__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TablaProductos__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TablaProductos___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__TablaProductos__);
 //
 //
 //
@@ -24641,13 +24643,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'bandeja-productos',
+  components: {
+    ModalProductos: __WEBPACK_IMPORTED_MODULE_0__ModalProductos___default.a,
+    TablaProductos: __WEBPACK_IMPORTED_MODULE_1__TablaProductos___default.a
+  },
   data: function data() {
     return {
       showModal: false,
@@ -24663,18 +24668,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }).catch(function (resp) {
       console.log(resp);
     });
-  },
-
-  components: {
-    Modal: __WEBPACK_IMPORTED_MODULE_0__layouts_modal___default.a
-  },
-  computed: {
-    data: function data() {
-      var a = [2, 3, 1, 10, 8];
-      return a.filter(function (item) {
-        return item > 4;
-      });
-    }
   }
 });
 
@@ -24686,6 +24679,7 @@ var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(28)
+  __webpack_require__(71)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
@@ -24764,7 +24758,7 @@ exports = module.exports = __webpack_require__(7)(false);
 
 
 // module
-exports.push([module.i, "\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, .5);\n  display: table;\n  /*transition: opacity .3s ease;*/\n}\n", ""]);
+exports.push([module.i, "\n.ModalBody {\n  color: #2a3f54;\n}\n.ModalFooter {\n  background-color: #f5f5f5;\n}\n", ""]);
 
 // exports
 
@@ -25045,11 +25039,36 @@ var render = function() {
       [
         _c(
           "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c("h4", { staticClass: "modal-title" }, [_vm._t("header")], 2)
+              _c("div", { staticClass: "modal-header ModalHeader" }, [
+                _c(
+                  "h4",
+                  { staticClass: "modal-title" },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "close",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.$emit("cerrar")
+                          }
+                        }
+                      },
+                      [
+                        _c("span", { attrs: { "aria-hidden": "true" } }, [
+                          _vm._v("×")
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm._t("header")
+                  ],
+                  2
+                )
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [_vm._t("body")], 2),
@@ -25062,11 +25081,11 @@ var render = function() {
                     on: {
                       click: function($event) {
                         $event.preventDefault()
-                        _vm.$emit("save")
+                        _vm.$emit("guardar")
                       }
                     }
                   },
-                  [_vm._v("Ok")]
+                  [_vm._v("Guardar")]
                 ),
                 _vm._v(" "),
                 _c(
@@ -25076,7 +25095,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         $event.preventDefault()
-                        _vm.$emit("close")
+                        _vm.$emit("cerrar")
                       }
                     }
                   },
@@ -25111,60 +25130,53 @@ var render = function() {
   return _c(
     "div",
     [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-default",
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              _vm.showModal = true
-            }
-          }
-        },
-        [_vm._v("\n    Abrir modal\n  ")]
-      ),
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-12" }, [
+        _c(
+          "div",
+          {
+            staticClass: "pull-right",
+            staticStyle: { "margin-bottom": "15px" }
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.showModal = true
+                  }
+                }
+              },
+              [_vm._v("\n        Crear nuevo producto\n      ")]
+            )
+          ]
+        )
+      ]),
       _vm._v(" "),
       _vm.showModal
-        ? _c(
-            "modal",
-            {
-              on: {
-                close: function($event) {
-                  _vm.showModal = false
-                }
+        ? _c("modal-productos", {
+            on: {
+              cerrar: function($event) {
+                _vm.showModal = false
               }
-            },
-            [
-              _c(
-                "h3",
-                {
-                  staticClass: "modal-title",
-                  attrs: { slot: "header" },
-                  slot: "header"
-                },
-                [_vm._v("\n      Modal title\n    ")]
-              )
-            ]
-          )
+            }
+          })
         : _vm._e(),
       _vm._v(" "),
-      _c("table", { staticClass: "table table-stripped table-bordered" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.productos, function(producto) {
-            return _c("tr", [
-              _c("td", [_vm._v(_vm._s(producto.descripcion))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(producto.precio))]),
-              _vm._v(" "),
-              _c("td")
-            ])
-          })
-        )
-      ])
+      _c(
+        "div",
+        { staticClass: "SIDJ-box" },
+        [
+          _vm.productos.length > 0
+            ? _c("tabla-productos", { attrs: { productos: _vm.productos } })
+            : _vm._e()
+        ],
+        1
+      )
     ],
     1
   )
@@ -25174,12 +25186,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("th", [_vm._v("Descripcion")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Precio")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Acciones")])
+    return _c("div", { staticClass: "title_left" }, [
+      _c("h3", [_vm._v("Productos")])
     ])
   }
 ]
@@ -56250,17 +56258,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      fetching: true
-    };
-  },
-  beforeMount: function beforeMount() {
-    this.fetching = false;
-  }
-});
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 /* 61 */
@@ -56270,7 +56268,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [!_vm.fetching ? _c("router-view") : _vm._e()], 1)
+  return _c("div", [_c("router-view")], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -56281,6 +56279,547 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-04b03404", module.exports)
   }
 }
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(63)
+/* template */
+var __vue_template__ = __webpack_require__(64)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/productos/components/ModalProductos.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-f2cdab48", Component.options)
+  } else {
+    hotAPI.reload("data-v-f2cdab48", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 63 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layouts_modal__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__layouts_modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__layouts_modal__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'modal-productos',
+  components: {
+    Modal: __WEBPACK_IMPORTED_MODULE_0__layouts_modal___default.a
+  },
+  props: {
+    producto: {
+      required: false
+    }
+  },
+  data: function data() {
+    return {
+      formData: _extends({
+        descripcion: '',
+        precio: ''
+      }, this.producto)
+    };
+  },
+
+  methods: {
+    guardar: function guardar() {
+      var _this = this;
+
+      axios.post('/api/productos', this.formData).then(function (resp) {
+        _this.$emit('cerrar');
+      });
+    }
+  }
+});
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "modal",
+    {
+      on: {
+        cerrar: function($event) {
+          _vm.$emit("cerrar")
+        },
+        guardar: _vm.guardar
+      }
+    },
+    [
+      _c(
+        "h3",
+        {
+          staticClass: "modal-title",
+          attrs: { slot: "header" },
+          slot: "header"
+        },
+        [_vm._v("\n    Registrar producto\n  ")]
+      ),
+      _vm._v(" "),
+      _c("form", { attrs: { slot: "body" }, slot: "body" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "col-md-12 col-sm-12 col-xs-12 form-group has-feedback",
+            class: { "bad has-error": _vm.errors.has("producto") }
+          },
+          [
+            _c("label", { attrs: { for: "producto" } }, [
+              _vm._v("Descripcion")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "validate",
+                  rawName: "v-validate",
+                  value: "required|min:5|max:250",
+                  expression: "'required|min:5|max:250'"
+                },
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.descripcion,
+                  expression: "formData.descripcion"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                name: "producto",
+                placeholder: "Descripcion de producto"
+              },
+              domProps: { value: _vm.formData.descripcion },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "descripcion", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("span", {
+              staticClass: "help-block",
+              domProps: {
+                textContent: _vm._s(
+                  _vm.errors.has("producto") ? _vm.errors.first("producto") : ""
+                )
+              }
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "col-md-12 col-sm-12 col-xs-12 form-group has-feedback",
+            class: { "bad has-error": _vm.errors.has("precio") }
+          },
+          [
+            _c("label", { attrs: { for: "precio" } }, [_vm._v("Precio")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "validate",
+                  rawName: "v-validate",
+                  value: "required",
+                  expression: "'required'"
+                },
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.precio,
+                  expression: "formData.precio"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", name: "precio", placeholder: "Precio" },
+              domProps: { value: _vm.formData.precio },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "precio", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("span", {
+              staticClass: "help-block",
+              domProps: {
+                textContent: _vm._s(
+                  _vm.errors.has("precio") ? _vm.errors.first("precio") : ""
+                )
+              }
+            })
+          ]
+        )
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-f2cdab48", module.exports)
+  }
+}
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(66)
+/* template */
+var __vue_template__ = __webpack_require__(67)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/productos/components/TablaProductos.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3be33f42", Component.options)
+  } else {
+    hotAPI.reload("data-v-3be33f42", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ModalProductos__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ModalProductos___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ModalProductos__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'tabla-productos',
+  components: {
+    ModalProductos: __WEBPACK_IMPORTED_MODULE_0__ModalProductos___default.a
+  },
+  data: function data() {
+    return {
+      showModal: false
+    };
+  },
+
+  props: {
+    productos: {
+      required: true
+    }
+  },
+  methods: {
+    borrar: function borrar(id, index) {
+      var _this = this;
+
+      axios.delete('/api/productos/' + id).then(function (resp) {
+        _this.productos.splice(index, id);
+      }).catch(function (resp) {
+        console.log(resp);
+      });
+    }
+  }
+});
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("table", { staticClass: "table table-striped" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "tbody",
+      _vm._l(_vm.productos, function(producto, index) {
+        return _c(
+          "tr",
+          [
+            _c("td", [_vm._v(_vm._s(producto.descripcion))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(producto.precio))]),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "a",
+                {
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.showModal = true
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-edit" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.borrar(producto.id, index)
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-trash" })]
+              )
+            ]),
+            _vm._v(" "),
+            _vm.showModal
+              ? _c("modal-productos", {
+                  attrs: { producto: producto },
+                  on: {
+                    cerrar: function($event) {
+                      _vm.showModal = false
+                    }
+                  }
+                })
+              : _vm._e()
+          ],
+          1
+        )
+      })
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("th", [_vm._v("Descripcion")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Precio")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Acciones")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3be33f42", module.exports)
+  }
+}
+
+/***/ }),
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(72);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(30)("7fe246c8", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-734f2ba0\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./modal.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-734f2ba0\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./modal.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(7)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.modal-mask {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, .5);\n  display: table;\n  /*transition: opacity .3s ease;*/\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

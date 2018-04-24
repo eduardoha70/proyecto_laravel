@@ -1,43 +1,46 @@
 <template>
   <div>
+    <div class="title_left">
+      <h3>Productos</h3>
+    </div>
 
-    <button class="btn btn-default"
-      @click.prevent="showModal = true"
-    >
-      Abrir modal
-    </button>
+    <div class="col-md-12">
+      <div class="pull-right" style="margin-bottom: 15px;">
+        <button class="btn btn-warning"
+          @click.prevent="showModal = true"
+        >
+          Crear nuevo producto
+        </button>
+      </div>
+    </div>
 
-    <modal
+    <modal-productos
       v-if="showModal"
-      @close="showModal = false"
+      @cerrar="showModal = false"
     >
-      <h3 slot="header" class="modal-title">
-        Modal title
-      </h3>
-    </modal>
+    </modal-productos>
 
-    <table class="table table-stripped table-bordered">
-      <thead>
-        <th>Descripcion</th>
-        <th>Precio</th>
-        <th>Acciones</th>
-      </thead>
-      <tbody>
-        <tr v-for="producto in productos">
-          <td>{{producto.descripcion}}</td>
-          <td>{{producto.precio}}</td>
-          <td>  </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="SIDJ-box">
+      <tabla-productos
+        v-if="productos.length > 0"
+        :productos="productos"
+      ></tabla-productos>
+    </div>
+
+
   </div>
 </template>
 
 <script>
-  import Modal from './../../layouts/modal';
+  import ModalProductos from './ModalProductos'
+  import TablaProductos from './TablaProductos'
 
   export default{
     name: 'bandeja-productos',
+    components: {
+      ModalProductos,
+      TablaProductos
+    },
     data(){
       return{
         showModal: false,
@@ -53,17 +56,6 @@
         console.log(resp)
       });
     },
-    components: {
-      Modal
-    },
-    computed: {
-      data(){
-        let a = [2,3,1,10,8]
-        return a.filter((item) => {
-          return item > 4
-        })
-      }
-    }
   }
 </script>
 
