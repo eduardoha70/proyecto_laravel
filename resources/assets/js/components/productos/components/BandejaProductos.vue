@@ -7,8 +7,6 @@
       Abrir modal
     </button>
 
-    {{data}}
-
     <modal
       v-if="showModal"
       @close="showModal = false"
@@ -18,8 +16,20 @@
       </h3>
     </modal>
 
-    {{ productos }}
-
+    <table class="table table-stripped table-bordered">
+      <thead>
+        <th>Descripcion</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+      </thead>
+      <tbody>
+        <tr v-for="producto in productos">
+          <td>{{producto.descripcion}}</td>
+          <td>{{producto.precio}}</td>
+          <td>  </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -37,9 +47,10 @@
     mounted() {
       axios.get('/api/productos')
       .then((resp) => {
-          this.productos = resp.data;
+        this.productos = resp.data.data
+        console.log(this.productos)
       }).catch(function (resp) {
-          console.log(resp);
+        console.log(resp)
       });
     },
     components: {
@@ -55,3 +66,4 @@
     }
   }
 </script>
+
