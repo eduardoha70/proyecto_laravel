@@ -388,5 +388,7 @@
     <!-- Custom Theme JavaScript -->
     <script src="{{url('js/vendor/sb-admin-2.js')}}"></script>
 
+    <script src="{{url('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 </body>
 </html>

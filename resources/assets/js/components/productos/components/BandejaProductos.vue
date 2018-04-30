@@ -16,15 +16,28 @@
 
     <modal-productos
       v-if="showModal"
+      :productos="productos"
       @cerrar="showModal = false"
     >
     </modal-productos>
 
-    <div class="SIDJ-box">
-      <tabla-productos
-        v-if="productos.length > 0"
-        :productos="productos"
-      ></tabla-productos>
+    <tabla-productos
+      v-if="productos.length > 0"
+      :productos="productos"
+    ></tabla-productos>
+
+
+    <div style="text-align: center">
+      <paginate
+        :page-count="pagination"
+        :page-range="3"
+        :margin-pages="2"
+        :click-handler="filtrarPagination"
+        :prev-text="'Ant'"
+        :next-text="'Sig'"
+        :container-class="'pagination'"
+        :page-class="'page-item'">
+      </paginate>
     </div>
 
 
@@ -35,27 +48,42 @@
   import ModalProductos from './ModalProductos'
   import TablaProductos from './TablaProductos'
 
+  import Paginate from 'vuejs-paginate'
+
   export default{
     name: 'bandeja-productos',
     components: {
       ModalProductos,
+      Paginate,
       TablaProductos
     },
     data(){
       return{
         showModal: false,
-        productos: []
+        productos: [],
+        pagination: 0
       }
     },
     mounted() {
-      axios.get('/api/productos')
+      axios.get('/api/productos', {params: { limit: 10}})
       .then((resp) => {
         this.productos = resp.data.data
-        console.log(this.productos)
+        this.pagination = resp.data.last_page
       }).catch(function (resp) {
         console.log(resp)
       });
     },
+    methods: {
+      filtrarPagination(pageNum){
+         axios.get('/api/productos', {params: { limit: 10, page: pageNum }})
+        .then((resp) => {
+          this.productos = resp.data.data
+          this.pagination = resp.data.last_page
+        }).catch(function (resp) {
+          console.log(resp)
+        });
+      }
+    }
   }
 </script>
 

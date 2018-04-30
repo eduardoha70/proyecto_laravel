@@ -57,6 +57,9 @@
     props:{
       producto:{
         required: false
+      },
+      productos:{
+        required: false
       }
     },
     data(){
@@ -70,10 +73,20 @@
     },
     methods:{
       guardar() {
-        axios.post('/api/productos', this.formData)
-          .then((resp) => {
+        if(this.formData.created_at){
+          axios.put('/api/productos/'+this.producto.id, this.formData)
+          .then((response) => {
+            this.producto.descripcion = this.formData.descripcion
+            this.producto.precio = this.formData.precio
             this.$emit('cerrar')
           })
+        }else{
+          axios.post('/api/productos', this.formData)
+          .then((response) => {
+            this.productos.push(response.data.data)
+            this.$emit('cerrar')
+          })
+        }
       }
     }
   }

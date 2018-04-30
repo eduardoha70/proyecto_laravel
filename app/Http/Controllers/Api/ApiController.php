@@ -25,7 +25,7 @@ class ApiController extends Controller
      */
     public function index(Request $request)
     {
-        $limit = $request->limit ? $request->limit : 5;
+        $limit = $request->limit ? $request->limit : 10;
         return $this->model::paginate($limit);
     }
 
@@ -46,7 +46,7 @@ class ApiController extends Controller
         }
         $response = [
             'message'   =>  'created',
-            'id'        =>  $registro->id
+            'data'        =>  $registro
         ];
 
         return $response;
