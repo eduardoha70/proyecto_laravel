@@ -5,17 +5,15 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 
-use App\Http\Resources\ProductoResource;
-use App\Models\Producto;
-
-
 class ApiController extends Controller
 {
     public $model;
+    public $resource;
 
-    public function __construct($model)
+    public function __construct($model, $resource)
     {
         $this->model = $model;
+        $this->resource = $resource;
     }
 
     /**
@@ -26,7 +24,7 @@ class ApiController extends Controller
     public function index(Request $request)
     {
         $limit = $request->limit ? $request->limit : 10;
-        return $this->model::paginate($limit);
+        return $this->resource::collection($this->model::paginate($limit));
     }
 
     /**
@@ -34,7 +32,7 @@ class ApiController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     */
+    */
     public function store(Request $request)
     {
         $registro = new $this->model;
@@ -45,8 +43,8 @@ class ApiController extends Controller
             throw new \Exception($errors);
         }
         $response = [
-            'message'   =>  'created',
-            'data'        =>  $registro
+            'message'  =>  'created',
+            'data'     =>  $registro
         ];
 
         return $response;
@@ -57,10 +55,10 @@ class ApiController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
+    */
     public function show($id)
     {
-        return $this->model::find($id);
+        return new $this->resource($this->model::find($id));
     }
 
     /**
@@ -109,3 +107,4 @@ class ApiController extends Controller
         return $response;
     }
 }
+

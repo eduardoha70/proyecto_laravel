@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <div class="title_left">
       <h3>Productos</h3>
     </div>
@@ -26,7 +27,6 @@
       :productos="productos"
     ></tabla-productos>
 
-
     <div style="text-align: center">
       <paginate
         :page-count="pagination"
@@ -39,7 +39,6 @@
         :page-class="'page-item'">
       </paginate>
     </div>
-
 
   </div>
 </template>
@@ -68,7 +67,7 @@
       axios.get('/api/productos', {params: { limit: 10}})
       .then((resp) => {
         this.productos = resp.data.data
-        this.pagination = resp.data.last_page
+        this.pagination = resp.data.meta.last_page
       }).catch(function (resp) {
         console.log(resp)
       });
@@ -78,7 +77,7 @@
          axios.get('/api/productos', {params: { limit: 10, page: pageNum }})
         .then((resp) => {
           this.productos = resp.data.data
-          this.pagination = resp.data.last_page
+          this.pagination = resp.data.meta.last_page
         }).catch(function (resp) {
           console.log(resp)
         });
@@ -86,4 +85,5 @@
     }
   }
 </script>
+
 

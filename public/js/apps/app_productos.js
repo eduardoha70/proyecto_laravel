@@ -24932,7 +24932,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -24958,7 +24957,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     axios.get('/api/productos', { params: { limit: 10 } }).then(function (resp) {
       _this.productos = resp.data.data;
-      _this.pagination = resp.data.last_page;
+      _this.pagination = resp.data.meta.last_page;
     }).catch(function (resp) {
       console.log(resp);
     });
@@ -24970,7 +24969,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       axios.get('/api/productos', { params: { limit: 10, page: pageNum } }).then(function (resp) {
         _this2.productos = resp.data.data;
-        _this2.pagination = resp.data.last_page;
+        _this2.pagination = resp.data.meta.last_page;
       }).catch(function (resp) {
         console.log(resp);
       });
