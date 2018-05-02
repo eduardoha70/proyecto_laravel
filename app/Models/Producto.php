@@ -19,5 +19,8 @@ class Producto extends Model
         'precio',
     ];
 
-
+    public function scopeBuscar($query, $req)
+    {
+        return $query->where('descripcion', 'LIKE', '%'.$req.'%');
+    }
 }

@@ -34,4 +34,4 @@ Route::group([
     Route::resource('token', 'TokenController');
 });
 
-Route::view('productos', 'apps.productos');
+Route::view('productos', 'apps.productos')->name('productos');
