@@ -19,8 +19,19 @@ class Producto extends Model
         'precio',
     ];
 
-    public function scopeBuscar($query, $req)
+    public function scopeFilter($query, $req)
     {
-        return $query->where('descripcion', 'LIKE', '%'.$req.'%');
+        $query = $query->select($this->table.'.*');
+        if(!empty($req['query']))
+        {
+            $query = $query->query($req['query']);
+        }
+        return $query;
+    }
+
+    public function scopeQuery($query, $q)
+    {
+        return empty($q) ? $query : $query
+            ->where('descripcion', 'LIKE', '%'.$q.'%');
     }
 }

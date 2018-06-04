@@ -5,13 +5,23 @@
       <h3>Productos</h3>
     </div>
 
-    <div class="col-md-12">
-      <div class="pull-right" style="margin-bottom: 15px;">
-        <button class="btn btn-warning"
+    <div class="row">
+      <div class="col-md-10">
+        <input type="text" name="query" class="form-control" v-model="filters.query" @keyup.enter="filtrarPagination">
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-info" @click.prevent="filtrarPagination">Buscar</button>
+        <button class="btn btn-warning" style="margin-left: 50%;"
           @click.prevent="showModal = true"
         >
-          Crear nuevo producto
+          <i class="fa fa-plus"></i>
         </button>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="pull-right" style="margin-bottom: 15px;">
+
       </div>
     </div>
 
@@ -58,13 +68,19 @@
     },
     data(){
       return{
+        filters: {
+          query: ''
+        },
         showModal: false,
         productos: [],
         pagination: 0
       }
     },
     mounted() {
-      axios.get('/api/productos', {params: { limit: 10}})
+      axios.get('/api/productos', {params: {
+        limit: 10,
+        ...this.filters
+      }})
       .then((resp) => {
         this.productos = resp.data.data
         this.pagination = resp.data.meta.last_page
@@ -74,7 +90,11 @@
     },
     methods: {
       filtrarPagination(pageNum){
-         axios.get('/api/productos', {params: { limit: 10, page: pageNum }})
+         axios.get('/api/productos', {params: {
+          limit: 10,
+          page: pageNum,
+          ...this.filters
+        }})
         .then((resp) => {
           this.productos = resp.data.data
           this.pagination = resp.data.meta.last_page

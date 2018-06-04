@@ -23,8 +23,14 @@ class ApiController extends Controller
      */
     public function index(Request $request)
     {
+        $query = $this->model;
         $limit = $request->limit ? $request->limit : 10;
-        return $this->resource::collection($this->model::paginate($limit));
+
+        if (method_exists($query, 'scopeFilter')) {
+            $query = $query->filter($request->all());
+        }
+
+        return $this->resource::collection($query->paginate($limit));
     }
 
     /**

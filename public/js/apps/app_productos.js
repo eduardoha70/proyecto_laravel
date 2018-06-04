@@ -24887,6 +24887,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TablaProductos___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__TablaProductos__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuejs_paginate__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuejs_paginate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vuejs_paginate__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -24947,6 +24959,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   data: function data() {
     return {
+      filters: {
+        query: ''
+      },
       showModal: false,
       productos: [],
       pagination: 0
@@ -24955,7 +24970,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('/api/productos', { params: { limit: 10 } }).then(function (resp) {
+    axios.get('/api/productos', { params: _extends({
+        limit: 10
+      }, this.filters) }).then(function (resp) {
       _this.productos = resp.data.data;
       _this.pagination = resp.data.meta.last_page;
     }).catch(function (resp) {
@@ -24967,7 +24984,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     filtrarPagination: function filtrarPagination(pageNum) {
       var _this2 = this;
 
-      axios.get('/api/productos', { params: { limit: 10, page: pageNum } }).then(function (resp) {
+      axios.get('/api/productos', { params: _extends({
+          limit: 10,
+          page: pageNum
+        }, this.filters) }).then(function (resp) {
         _this2.productos = resp.data.data;
         _this2.pagination = resp.data.meta.last_page;
       }).catch(function (resp) {
@@ -25845,30 +25865,73 @@ var render = function() {
     [
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-12" }, [
-        _c(
-          "div",
-          {
-            staticClass: "pull-right",
-            staticStyle: { "margin-bottom": "15px" }
-          },
-          [
-            _c(
-              "button",
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-10" }, [
+          _c("input", {
+            directives: [
               {
-                staticClass: "btn btn-warning",
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.showModal = true
-                  }
+                name: "model",
+                rawName: "v-model",
+                value: _vm.filters.query,
+                expression: "filters.query"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", name: "query" },
+            domProps: { value: _vm.filters.query },
+            on: {
+              keyup: function($event) {
+                if (
+                  !("button" in $event) &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
                 }
+                return _vm.filtrarPagination($event)
               },
-              [_vm._v("\n        Crear nuevo producto\n      ")]
-            )
-          ]
-        )
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.filters, "query", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-2" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-info",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.filtrarPagination($event)
+                }
+              }
+            },
+            [_vm._v("Buscar")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-warning",
+              staticStyle: { "margin-left": "50%" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.showModal = true
+                }
+              }
+            },
+            [_c("i", { staticClass: "fa fa-plus" })]
+          )
+        ])
       ]),
+      _vm._v(" "),
+      _vm._m(1),
       _vm._v(" "),
       _vm.showModal
         ? _c("modal-productos", {
@@ -25915,6 +25978,17 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "title_left" }, [
       _c("h3", [_vm._v("Productos")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("div", {
+        staticClass: "pull-right",
+        staticStyle: { "margin-bottom": "15px" }
+      })
     ])
   }
 ]
