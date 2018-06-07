@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
+use LaravelArdent\Ardent\Ardent;
 use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Webpatser\Uuid\Uuid;
 
-class Producto extends Model
+class Producto extends Ardent
 {
     use SoftDeletes;
-
-    protected $dates = ['deleted_at'];
 
     protected $table = "producto";
 
@@ -18,6 +17,15 @@ class Producto extends Model
         'descripcion',
         'precio',
     ];
+
+    public static $rules = [
+        'descripcion' => 'required|between:3,80',
+        'precio'      => 'required|integer',
+    ];
+
+    public function beforeSave(){
+         $this->uuid = $this->uuid ? $this->uuid : (string) Uuid::generate(4);
+    }
 
     public function scopeFilter($query, $req)
     {
