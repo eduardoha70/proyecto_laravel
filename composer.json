@@ -11,6 +11,7 @@
         "laravel/passport": "^4.0",
         "laravel/tinker": "~1.0",
         "laravelbook/ardent": "3.*",
+        "owen-it/laravel-auditing": "^7.0",
         "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {
