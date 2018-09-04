@@ -32,7 +32,11 @@ return [
     */
 
     'connections' => [
+<<<<<<< HEAD
         'public' => [
+=======
+        'data' => [
+>>>>>>> c6689236a5d9044bd60278bbbd8130ef04139b5c
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
