@@ -19,7 +19,7 @@
         <link href="{{url('vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
 
         <!-- Custom CSS -->
-        <link href="{{url('css/sb-admin-2.css')}}" rel="stylesheet">
+        <link href="{{url('css/vendor/sb-admin-2.css')}}" rel="stylesheet">
     </head>
 
     <body>

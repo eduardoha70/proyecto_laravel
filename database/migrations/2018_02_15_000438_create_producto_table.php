@@ -13,8 +13,9 @@ class CreateProductoTable extends Migration
      */
     public function up()
     {
-        Schema::create('producto', function (Blueprint $table) {
+        Schema::connection('data')->create('producto', function (Blueprint $table) {
             $table->increments('id');
+            $table->uuid('uuid')->unique();
             $table->string('descripcion');
             $table->integer('precio');
             $table->timestamps();
@@ -29,6 +30,6 @@ class CreateProductoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('producto');
+        Schema::connection('data')->dropIfExists('producto');
     }
 }

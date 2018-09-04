@@ -11,6 +11,13 @@ class User extends Authenticatable
     use Notifiable, HasApiTokens;
 
     /**
+     * Atributo de conexion a base de datos
+     *
+     * @var array
+     */
+    protected $connection = 'public';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -27,4 +34,5 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
 }

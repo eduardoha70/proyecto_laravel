@@ -8,8 +8,11 @@
         "php": ">=7.0.0",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
+        "laravel/passport": "^4.0",
         "laravel/tinker": "~1.0",
-        "laravel/passport": "^4.0"
+        "laravelbook/ardent": "3.*",
+        "owen-it/laravel-auditing": "^7.0",
+        "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",

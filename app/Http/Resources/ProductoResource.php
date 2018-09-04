@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
 
-class Producto extends Resource
+class ProductoResource extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -18,8 +18,8 @@ class Producto extends Resource
             'id'            => $this->id,
             'precio'        => $this->precio,
             'descripcion'   => $this->descripcion,
-            'created_at'    => $this->created_at,
-            'updated_at'    => $this->updated_at,
+            'created_at'    => $this->created_at->toDateTimeString(),
+            'updated_at'    => $this->updated_at->toDateTimeString(),
             'links' => [
                 'self'      => url('/api/productos/'.$this->id)
             ]

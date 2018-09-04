@@ -11,8 +11,6 @@
 |
 */
 
-// Route::view('/', 'welcome');
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -20,7 +18,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::redirect('/', '/login');
-
 
 Route::group([
     'prefix' => '/admin',
@@ -34,4 +31,4 @@ Route::group([
     Route::resource('token', 'TokenController');
 });
 
-Route::view('productos', 'apps.productos');
+Route::view('productos', 'apps.productos')->middleware('auth')->name('productos');

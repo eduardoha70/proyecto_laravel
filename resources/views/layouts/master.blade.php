@@ -321,6 +321,9 @@
                             </ul>
                         </li> --}}
                         <li>
+                            <a href="{{route('productos')}}"><i class="fa fa-info fa-fw"></i> Productos</a>
+                        </li>
+                        <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -388,5 +391,7 @@
     <!-- Custom Theme JavaScript -->
     <script src="{{url('js/vendor/sb-admin-2.js')}}"></script>
 
+    <script src="{{url('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 </body>
 </html>

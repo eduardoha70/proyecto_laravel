@@ -13,18 +13,16 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="{{url('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-
     <!-- MetisMenu CSS -->
     <link href="{{url('vendor/metisMenu/metisMenu.min.css')}}" rel="stylesheet">
-
     <!-- Custom CSS -->
-    <link href="{{url('css/sb-admin-2.css')}}" rel="stylesheet">
-
+    <link href="{{url('css/vendor/sb-admin-2.css')}}" rel="stylesheet">
     <!-- Morris Charts CSS -->
     <link href="{{url('vendor/morrisjs/morris.css')}}" rel="stylesheet">
-
     <!-- Custom Fonts -->
     <link href="{{url('vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @yield('estilos')
 
